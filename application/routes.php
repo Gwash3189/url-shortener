@@ -1,16 +1,16 @@
 <?php
 Route::get('/', function()
 {
-    return View::make('home.index');
+	//if a get request is made to root
+    return View::make('home.index'); //return the view/home/index.blade.php page.
 });
 
 Route::post('/', function()
-{
+{ //if a post is sent to root page (form submisstion, AJAX, etc..)
 
-    $url = Input::get('url');
+    $url = Input::get('url');//get the value of the input field 'url'
 
-
-    $validate = Url::validate(array('url'=> $url)); // validate the URL
+    $validate = Url::validate(array('url'=> $url)); // validate the URL by using the validate method in models/Url.php
     if($validate !==  true){ //if invalid
         return Redirect::to('/')->with_errors($validate->errors);
         // redirect back to root with error messages
@@ -24,20 +24,20 @@ Route::post('/', function()
 
     // othewise, add a new row aßnd return the shortened url
     $row = Url::create(array(
-        'url' => $url,
-        'shortened' => Url::get_unique_short_url()
+        'url' => $url, //uses Elequent method 'create' in order to insert both values.
+        'shortened' => Url::get_unique_short_url() // see Url.php for more details
     ));
-    if($row){
-        return View::make('home.result')
-            ->with('shortened', $row->shortened);
+    if($row){ // if there is a response from the database
+        return View::make('home.result') // return the home/result.blade.php page
+            ->with('shortened', $row->shortened); // with the variable for a shortened url
     }
 });
 
-Route::get('(:any)',function($shortened){
+Route::get('(:any)',function($shortened){ // if any request sent to the root page with any data after the '/'
 
     //query the DB for the row with that short URL
     $row = Url::where_shortened($shortened)->first();
-    if( is_null($row)){
+    if( is_null($row)){ // if there isn't that url in the database
         return Redirect::to('/'); //redirect to home page if not found
     }
     return Redirect::to($row->url); //otherwise, redirect to url
