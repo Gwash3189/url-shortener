@@ -12,14 +12,3 @@ Url-Shortener is open-source software licensed under the MIT License.
 
 
 ## [Laravel](http://laravel.com) - A PHP Framework For Web Artisans
-
-Laravel is a clean and classy framework for PHP web development. Freeing you
-from spaghetti code, Laravel helps you create wonderful applications using
-simple, expressive syntax. Development should be a creative experience that you
-enjoy, not something that is painful. Enjoy the fresh air.
-
-[Official Website & Documentation](http://laravel.com)
-
-## License
-
-Laravel is open-sourced software licensed under the MIT License.
